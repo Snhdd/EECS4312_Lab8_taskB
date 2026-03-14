@@ -597,3 +597,55 @@ That means:
 
 So the only earlier issue was pytest discovery, not your code.
 
+
+Lab9
+Prompt 1:
+I am building an event registration system with a fixed capacity and FIFO waitlist. Users can register for the event and if capacity is full they are placed on a waitlist. When a registered user cancels, the earliest waitlisted user is promoted. Duplicate registrations must be rejected and users can query their status.
+
+Personas:
+Jane Adams – Busy professional who prefers predictable behavior, automatic conflict resolution, and minimal notifications.
+
+Mo Rodriguez – User who needs deterministic behavior, clear explanations when an action fails, and proper handling of edge cases.
+
+Constraints:
+C1: The system must preserve deterministic ordering of the waitlist.
+C2: Duplicate registrations must be prevented.
+C3: When capacity is full, users must be placed on the waitlist.
+C4: The system must provide explicit errors when an operation fails.
+C5: Waitlist promotion must follow FIFO order.
+C6: Each user must exist in only one state at a time.
+C7: The system must produce concise status outputs.
+C8: The system must handle edge cases such as zero capacity.
+
+Acceptance Criteria include:
+- Earliest waitlisted user is promoted when a registered user cancels
+- Duplicate registration requests are rejected
+- Users are placed on waitlist when capacity is full
+- Status queries return registered, waitlisted, or none
+
+Can you review this specification and tell me if there are missing constraints, ambiguous requirements, or unhandled edge cases? Do not generate code.
+
+Response:
+The specification is mostly clear. Deterministic ordering and FIFO waitlist behavior are well defined. Duplicate registration prevention and explicit error handling are also clearly specified. One possible edge case to ensure is handled is when the event capacity is zero, where all users should be waitlisted. Another edge case is ensuring waitlist positions update correctly when a waitlisted user cancels.
+
+Decision:
+Accepted – The feedback confirmed the specification and edge cases were already included in the requirements.
+
+Prompt 2:
+Are the constraints derived from the personas Jane and Mo precise and testable for this event registration system?
+
+Response:
+Yes. The constraints are clear and testable. Deterministic ordering, duplicate prevention, explicit error handling, and FIFO promotion rules can all be verified through tests. These constraints reflect the needs of Jane for predictable automated behavior and Mo for deterministic and transparent system responses.
+
+Decision:
+Accepted – The constraints remain unchanged.
+
+Prompt 3:
+Do the acceptance criteria and edge cases cover the main behaviors of the system including duplicate registration, cancellation, FIFO promotion, and status queries?
+
+Response:
+Yes. The acceptance criteria cover the key behaviors of the system. Edge cases such as duplicate registration, cancellation of a user not in the system, zero capacity, and waitlist updates are properly defined and can be validated through tests.
+
+Decision:
+Accepted – No changes required to the requirements.
+
