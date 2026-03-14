@@ -684,3 +684,34 @@ The zero-capacity registration test, missing-user cancellation test, duplicate r
 
 Decision:
 Accepted – These tests were treated as edge-case coverage in the final submission.
+
+Prompt 8
+do you think i should add more test cases?
+
+Short answer: you don’t need more tests. Your current test suite is already stronger than what the lab requires.
+
+What the lab requires
+
+Task 8 requires:
+
+at least 5 tests
+
+at least 2 edge-case tests
+
+each test linked to C# and AC#
+
+Your file currently has 10 tests, including edge cases like:
+
+duplicate registration
+
+cancel missing user
+
+capacity = 0
+
+waitlist promotion
+
+waitlist cancellation
+
+status query for unknown user
+
+So you exceed the requirement.
