@@ -188,3 +188,18 @@ FR8 → C4 → AC2, AC6
 ---
 
 ## Revision Notes
+
+No requirement changes were identified during testing. The existing requirements, constraints, acceptance criteria, and edge cases were sufficient to validate the implementation.
+## Revision Notes
+
+Revision Note 1
+Requirement reviewed: AC7 / EC1 – Capacity equals zero
+Reason: Testing confirmed the system behavior for zero-capacity events needed to be explicitly verified.
+Action: No requirement change was needed because the behavior was already clearly defined in the specification.
+Triggered by LLM feedback: No
+
+Revision Note 2
+Requirement reviewed: AC6 / EC5 – Cancellation of a missing user
+Reason: Testing confirmed the system must return an explicit error instead of failing silently.
+Action: No requirement change was needed because the requirement was already explicitly defined.
+Triggered by LLM feedback: No
