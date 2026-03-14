@@ -649,3 +649,38 @@ Yes. The acceptance criteria cover the key behaviors of the system. Edge cases s
 Decision:
 Accepted – No changes required to the requirements.
 
+Prompt 4:
+Based on the requirements and constraints derived from the personas, how should I implement an event registration system with a fixed capacity and FIFO waitlist? The system must prevent duplicate registrations, automatically promote waitlisted users when a registered user cancels, and provide deterministic behavior.
+
+Response:
+The implementation should maintain two ordered lists: one for registered users and one for the waitlist. A set can be used for fast membership checks to prevent duplicates. When a user registers and capacity is available, they are added to the registered list. If capacity is full, they are added to the waitlist. When a registered user cancels, the earliest waitlisted user should be promoted.
+
+Decision:
+Accepted – The implementation strategy was used in the final solution.
+
+Prompt 5:
+How should the system handle edge cases such as duplicate registrations, cancellation of a user not in the system, and capacity equal to zero?
+
+Response:
+Duplicate registrations should raise an explicit error. Cancelling a user not in the system should raise a not-found error. When capacity is zero, all users should be placed on the waitlist and none should be registered.
+
+Decision:
+Accepted – These behaviors were implemented and verified through tests.
+
+Prompt 6:
+Do these tests sufficiently verify the event registration system requirements, including FIFO waitlist behavior, duplicate prevention, zero-capacity handling, and explicit errors for invalid cancellations?
+
+Response:
+Yes. The tests cover the main functional requirements and several edge cases. They verify duplicate prevention, waitlist promotion order, waitlist position updates, zero-capacity behavior, and explicit errors for missing users.
+
+Decision:
+Accepted – The current test suite was kept and mapped to the final constraint and acceptance-criteria IDs.
+
+Prompt 7:
+Which of my tests should be considered edge-case tests for the persona-based requirements?
+
+Response:
+The zero-capacity registration test, missing-user cancellation test, duplicate registration test, and status query for a user not in the system are edge-case tests because they validate unusual or boundary conditions.
+
+Decision:
+Accepted – These tests were treated as edge-case coverage in the final submission.
