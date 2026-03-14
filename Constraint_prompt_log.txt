@@ -1,6 +1,22 @@
-## Student Name:
-## Student ID: 
+## Student Name:salim haddad
+## Student ID: 219930270
 
-Prompt #1: {}
-Response #1: {}
---------------------------------------------------
+Prompt 1:
+I asked the LLM to help brainstorm possible system constraints derived from the two personas.
+
+Purpose:
+Brainstorm possible constraints and clarify how persona behaviors and needs translate into system constraints.
+
+Response summary:
+The LLM suggested constraints such as deterministic ordering, preventing duplicate notifications, automatic conflict resolution, and providing explanations for system decisions.
+
+| Constraint                                                         | Current Support Level | Description                                                                                                 |
+| ------------------------------------------------------------------ | --------------------- | ----------------------------------------------------------------------------------------------------------- |
+| **C1 – Deterministic ordering**                                    | **Fully supported**   | Your system uses deterministic ordering because users are stored in lists and promotions follow FIFO order. |
+| **C2 – Prevent duplicate registrations**                           | **Fully supported**   | The system checks `_reg_set` and `_wait_set` and raises `DuplicateRequest` if the user already exists.      |
+| **C3 – Automatic conflict handling (capacity)**                    | **Fully supported**   | When capacity is full, new users are automatically placed on the waitlist.                                  |
+| **C4 – No dual states (user cannot be registered and waitlisted)** | **Fully supported**   | The system maintains `_reg_set` and `_wait_set` to guarantee a user cannot exist in both states.            |
+| **C5 – FIFO waitlist ordering**                                    | **Fully supported**   | The waitlist uses a list and promotions use `pop(0)`, ensuring FIFO behavior.                               |
+| **C6 – Promotion after cancellation**                              | **Fully supported**   | When a registered user cancels, the earliest waitlisted user is promoted automatically.                     |
+| **C7 – System state consistency**                                  | **Fully supported**   | Registered users and waitlist users are tracked consistently using sets and lists.                          |
+| **C8 – Capacity edge cases (e.g., capacity = 0)**                  | **Fully supported**   | Your system correctly handles `capacity=0`, sending all users to the waitlist.                              |
