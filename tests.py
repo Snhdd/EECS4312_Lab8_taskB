@@ -3,7 +3,7 @@ import pytest
 from solution import EventRegistration, UserStatus, DuplicateRequest, NotFound
 
 
-# Validates: C1 (capacity not exceeded), C5 (FIFO waitlist), C7 (consistent state)
+# Covers C3, C6, AC3
 def test_register_until_capacity_then_waitlist_fifo_positions():
     er = EventRegistration(capacity=2)
 
@@ -22,7 +22,7 @@ def test_register_until_capacity_then_waitlist_fifo_positions():
     assert snap["waitlist"] == ["u3", "u4"]
 
 
-# Validates: C6 (promotion on cancel), C5 (FIFO), C1 (capacity respected), C4 (no dual states)
+# Covers C1, C3, C5, AC1, AC4
 def test_cancel_registered_promotes_earliest_waitlisted_fifo():
     er = EventRegistration(capacity=1)
     er.register("u1")
@@ -40,7 +40,7 @@ def test_cancel_registered_promotes_earliest_waitlisted_fifo():
     assert snap["waitlist"] == ["u3"]
 
 
-# Validates: C3 (no duplicates), C2 (reject duplicate registration)
+# Covers C2, AC2
 def test_duplicate_register_raises_for_registered_and_waitlisted():
     er = EventRegistration(capacity=1)
     er.register("u1")
@@ -52,7 +52,7 @@ def test_duplicate_register_raises_for_registered_and_waitlisted():
         er.register("u2")
 
 
-# Validates: C5 (FIFO ordering preserved), C7 (consistent state), C4 (single state)
+# Covers C1, C6, AC8
 def test_waitlisted_cancel_removes_and_updates_positions():
     er = EventRegistration(capacity=1)
     er.register("u1")
@@ -69,7 +69,7 @@ def test_waitlisted_cancel_removes_and_updates_positions():
     assert snap["waitlist"] == ["u3"]
 
 
-# Validates: C8 (capacity=0 behavior), C1 (never exceed capacity), C7 (state consistent)
+# Covers C3, C8, AC7
 def test_capacity_zero_all_waitlisted_and_promotion_never_happens():
     er = EventRegistration(capacity=0)
     assert er.register("u1") == UserStatus("waitlisted", 1)
@@ -86,10 +86,10 @@ def test_capacity_zero_all_waitlisted_and_promotion_never_happens():
 
 
 #################################################################################
-# Additional tests (recommended) to cover more edge cases
+# Additional tests to cover more edge cases
 #################################################################################
 
-# Validates: C7 (consistent state), C6 (promotion happens deterministically)
+# Covers C1, C5, AC1, AC4
 def test_multiple_cancellations_promote_multiple_waitlisted_in_order():
     er = EventRegistration(capacity=2)
     er.register("u1")
@@ -105,13 +105,13 @@ def test_multiple_cancellations_promote_multiple_waitlisted_in_order():
     assert snap["waitlist"] == []
 
 
-# Validates: C7 (status query), C4 (user not in multiple states)
+# Covers C6, C7, AC5
 def test_status_none_for_user_not_in_system():
     er = EventRegistration(capacity=1)
     assert er.status("ghost") == UserStatus("none")
 
 
-# Validates: C6 (no promotion if no waitlist), C1 (capacity respected)
+# Covers C4, AC6
 def test_cancel_registered_with_empty_waitlist_leaves_open_slot():
     er = EventRegistration(capacity=1)
     er.register("u1")
@@ -122,7 +122,7 @@ def test_cancel_registered_with_empty_waitlist_leaves_open_slot():
     assert snap["waitlist"] == []
 
 
-# Validates: C7 (re-register after cancel), C3 (no duplicates at a time)
+# Covers C7, AC5
 def test_user_can_reregister_after_canceling():
     er = EventRegistration(capacity=1)
     er.register("u1")
@@ -132,7 +132,7 @@ def test_user_can_reregister_after_canceling():
     assert er.register("u1") == UserStatus("registered")
 
 
-# Validates: C7 (NotFound behavior on cancel missing)
+# Covers C4, AC6
 def test_cancel_missing_user_raises_notfound():
     er = EventRegistration(capacity=1)
     with pytest.raises(NotFound):
